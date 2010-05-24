@@ -4,8 +4,8 @@ module Fabulator
       class Property
         def compile_xml(xml, c_attrs = { })
           @database = ActionLib.get_attribute(EXHIBIT_NS, 'database', c_attrs)
-          @name = ActionLib.get_local_attr(EXHIBIT_NS, 'name')
-          @valueType = ActionLib.get_local_attr(EXHIBIT_NS, 'valueType')
+          @name = ActionLib.get_local_attr(xml, EXHIBIT_NS, 'name')
+          @valueType = ActionLib.get_local_attr(xml, EXHIBIT_NS, 'valueType')
           self
         end
 
