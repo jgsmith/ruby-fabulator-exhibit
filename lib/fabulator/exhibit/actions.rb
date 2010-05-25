@@ -58,6 +58,7 @@ module Fabulator
         end
 
         def self.add_info(nom, t, item)
+          @@databases ||= {}
           @@databases[nom] ||= self.fetch_database(nom)
           case t
             when :items
@@ -69,9 +70,9 @@ module Fabulator
               end
               @@databases[nom][t] << item
             when :types, :properties
-              @@databases[nom][:type][item[:id]] ||= { }
-              @@databases[nom][:type][item[:id]].merge!(item)
-              @@databases[nom][:type][item[:id]].delete(:id)
+              @@databases[nom][t][item[:id]] ||= { }
+              @@databases[nom][t][item[:id]].merge!(item)
+              @@databases[nom][t][item[:id]].delete(:id)
           end
         end
 
