@@ -8,18 +8,29 @@ module Fabulator
           @id = ActionLib.get_local_attr(xml, EXHIBIT_NS, 'id', { :eval => true })
           @type = ActionLib.get_local_attr(xml, EXHIBIT_NS, 'type')
           @label = ActionLib.get_local_attr(xml, EXHIBIT_NS, 'label', { :eval => true })
+          @select = ActionLib.get_local_attr(xml, FAB_NS, 'select', { :eval => true })
           self
         end
 
         def run(context, autovivify = false)
-          info = Fabulator::Exhibit::Actions::Lib.accumulate_item_info do
-            @actions.run(context)
+          items = [ ]
+          if @select.nil?
+            items = [ context ]
+          else
+            items = @select.run(context)
           end
-          info[:id] = @id.run(context).first.to_s
-          info[:type] = @type.run(context).first.to_s
-          info[:label] = @label.run(context).first.to_s
+
           db = @database.run(context).first.to_s
-          Fabulator::Exhibit::Actions::Lib.add_info(db, :items, info)
+
+          items.each do |item|
+            info = Fabulator::Exhibit::Actions::Lib.accumulate_item_info do
+              @actions.run(item)
+            end
+            info[:id] = @id.run(item).first.to_s
+            info[:type] = @type.run(item).first.to_s
+            info[:label] = @label.run(item).first.to_s
+            Fabulator::Exhibit::Actions::Lib.add_info(db, :items, info)
+          end
         end
       end
 
