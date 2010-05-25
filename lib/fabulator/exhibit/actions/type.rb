@@ -10,12 +10,12 @@ module Fabulator
         end
 
         def run(context, autovivify = false)
+          info = { :id => @name.run(context).first.to_s }
+          if !@pluralLabel.nil?
+            info[:pluralLabel] = @pluralLabel.run(context).first.to_s
+          end
           Fabulator::Exhibit::Actions::Lib.add_info(
-            @database.run(context).first.to_s, 
-            :types, {
-              :id => @name.run(context).first.to_s,
-              :pluralLabel => @pluralLabe.run(context).first.to_s
-            }
+            @database.run(context).first.to_s, :types, info
           )
         end
       end

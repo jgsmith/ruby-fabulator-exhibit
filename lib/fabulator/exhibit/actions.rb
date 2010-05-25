@@ -16,15 +16,6 @@ module Fabulator
 
         register_attribute 'database'
 
-        register_type 'database', {
-          :to => [
-            { :type => [ FAB_NS, 'string' ],
-              :weight => 1.0,
-              :convert => lambda { |x| x.anon_node(x.value.to_s, [ FAB_NS, 'string' ]) }
-            }
-          ]
-        }
-
         action 'database', Database
         action 'item', Item
         action 'value', Value
