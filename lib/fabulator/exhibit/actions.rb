@@ -54,6 +54,9 @@ module Fabulator
 
         def self.add_item_to_accumulator(k,v)
           return if @@item.empty?
+          if v.is_a?(Array) && v.size == 1
+            v = v[0]
+          end
           @@item[0][k] = v
         end
 
