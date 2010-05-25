@@ -63,18 +63,10 @@ module Fabulator
         def self.add_info(nom, t, item)
           @@databases ||= {}
           @@databases[nom] ||= self.fetch_database(nom)
+          @@databases[nom][t][item[:id]] ||= { }
+          @@databases[nom][t][item[:id]].merge!(item)
           case t
-            when :items
-              @@databases[nom][t].each do |i|
-                if i[:id] == item[:id]
-                  i.merge!(item)
-                  return
-                end
-              end
-              @@databases[nom][t] << item
             when :types, :properties
-              @@databases[nom][t][item[:id]] ||= { }
-              @@databases[nom][t][item[:id]].merge!(item)
               @@databases[nom][t][item[:id]].delete(:id)
           end
         end
@@ -82,12 +74,7 @@ module Fabulator
         def self.remove_info(nom, t, id)
           @@databases[nom] ||= self.fetch_database(nom)
           return if @@databases[nom][t].empty?
-          case t
-            when :items
-              @@databases[nom][t].delete!{ |i| i[:id] == id }
-            when :types
-            when :properties
-          end
+          @@databases[nom][t].delete(id)
         end
       end
     end

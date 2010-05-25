@@ -37,13 +37,18 @@ module Fabulator
       class Database
         def compile_xml(xml, c_attrs = { })
           @database = ActionLib.get_attribute(EXHIBIT_NS, 'database', c_attrs)
+          @mode     = ActionLib.get_local_attr(xml, EXHIBIT_NS, 'mode', { :default => 'merge' })
           @actions = ActionLib.compile_actions(xml, c_attrs)
           self
         end
 
         def run(context, autovivify = false)
           nom = @database.run(context).first.to_s
-          Fabulator::Exhibit::Actions::Lib.set_database(nom, Fabulator::Exhibit::Actions::Lib.fetch_database(nom))
+          if @mode.run(context).first.to_s == 'merge'
+            Fabulator::Exhibit::Actions::Lib.set_database(nom, Fabulator::Exhibit::Actions::Lib.fetch_database(nom))
+          else
+            Fabulator::Exhibit::Actions::Lib.set_database(nom, { :items => [], :types => {}, :properties => {} })
+          end
           ret = [ ]
           begin
             ret = @actions.run(context)
