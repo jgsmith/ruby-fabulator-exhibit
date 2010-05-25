@@ -47,7 +47,7 @@ module Fabulator
           if @mode.run(context).first.to_s == 'merge'
             Fabulator::Exhibit::Actions::Lib.set_database(nom, Fabulator::Exhibit::Actions::Lib.fetch_database(nom))
           else
-            Fabulator::Exhibit::Actions::Lib.set_database(nom, { :items => [], :types => {}, :properties => {} })
+            Fabulator::Exhibit::Actions::Lib.set_database(nom, { :items => {}, :types => {}, :properties => {} })
           end
           ret = [ ]
           begin
