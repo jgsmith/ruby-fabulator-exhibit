@@ -1,3 +1,5 @@
+require 'uuid'
+
 module Fabulator
   module Exhibit
     module Actions
@@ -26,7 +28,11 @@ module Fabulator
             info = Fabulator::Exhibit::Actions::Lib.accumulate_item_info do
               @actions.run(item)
             end
-            info[:id] = @id.run(item).first.to_s
+            info[:id] = (@id.run(item).first.to_s rescue nil)
+            if info[:id].nil?
+              @@uuid ||= UUID.new
+              info[:id] = @@uuid.generate(:compact)
+            end
             info[:type] = @type.run(item).first.to_s
             info[:label] = @label.run(item).first.to_s
             Fabulator::Exhibit::Actions::Lib.add_info(db, :items, info)
