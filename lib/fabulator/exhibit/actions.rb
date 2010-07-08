@@ -32,7 +32,7 @@ module Fabulator
         end
 
         def self.get_database(nom)
-          @@databases[nom]
+          @@databases[nom] ||= self.fetch_database(nom)
         end
 
         def self.set_database(nom, data)
@@ -75,6 +75,21 @@ module Fabulator
           @@databases[nom] ||= self.fetch_database(nom)
           return if @@databases[nom][t].empty?
           @@databases[nom][t].delete(id)
+        end
+
+        function 'items' do |ctx, args, ns|
+          db = self.get_database(args.first.to_s)
+          db[:items].collect{ |item|
+            i = ctx.anon_node(item["id"])
+            item.each_pair do |k,v|
+              next if k == "id"
+              v = [ v ] unless v.is_a?(Array)
+              v.each do |vv|
+                i.create_child(k,vv)
+              end
+            end
+            i
+          }
         end
       end
     end
