@@ -15,6 +15,7 @@ module Fabulator
         register_namespace EXHIBIT_NS
 
         register_attribute 'database'
+        register_attribute 'type'
 
         action 'database', Database
         action 'item', Item
@@ -87,6 +88,7 @@ module Fabulator
           db = self.get_database(args.first.to_s)
           db[:items].collect{ |item|
             i = ctx.anon_node(item["id"])
+            i.name = item["id"]
             item.each_pair do |k,v|
               next if k == "id"
               v = [ v ] unless v.is_a?(Array)
