@@ -64,17 +64,17 @@ module Fabulator
         def self.add_info(nom, t, item)
           @@databases ||= {}
           @@databases[nom] ||= self.fetch_database(nom)
-          @@databases[nom][t][item[:id]] ||= { }
-          @@databases[nom][t][item[:id]].merge!(item)
-          @@databases[nom][t][item[:id]].each_pair do |k,v|
+          @@databases[nom][t][item['id']] ||= { }
+          @@databases[nom][t][item['id']].merge!(item)
+          @@databases[nom][t][item['id']].each_pair do |k,v|
             if v.nil? || (v.is_a?(Array) && v.empty?) ||
                v.is_a?(String) && v == ""
-              @@databases[nom][t][item[:id]].delete(k)
+              @@databases[nom][t][item['id']].delete(k)
             end
           end
           case t
             when :types, :properties
-              @@databases[nom][t][item[:id]].delete(:id)
+              @@databases[nom][t][item['id']].delete(:id)
           end
         end
 
