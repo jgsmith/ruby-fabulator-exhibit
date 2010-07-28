@@ -13,8 +13,8 @@ module Fabulator
           Fabulator::Exhibit::Actions::Lib.add_info(
             @database.run(context).first.to_s, 
             :properties, {
-              :id => @name.run(context).first.to_s,
-              :valueType => @valueType.run(context).first.to_s
+              'id' => @name.run(context).first.to_s,
+              'valueType' => @valueType.run(context).first.to_s
             }
           )
         end
