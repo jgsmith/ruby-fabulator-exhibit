@@ -53,16 +53,19 @@ module Fabulator
           nom = @database.run(context).first.to_s
           mode = @mode.run(context).first.to_s
           scope_type = (@scope_type.run(context).first.to_s rescue nil)
+          db = nil
           if mode == 'merge' || !scope_type.nil?
-            Fabulator::Exhibit::Actions::Lib.set_database(nom, Fabulator::Exhibit::Actions::Lib.fetch_database(nom))
-          else
-            Fabulator::Exhibit::Actions::Lib.set_database(nom, { :items => {}, :types => {}, :properties => {} })
+            db = Fabulator::Exhibit::Actions::Lib.fetch_database(nom)
+            if !db.nil? && mode == 'overwrite'  # !scope_type.nil? is a consequence
+              # remove any items of scope_type
+              db[:items].delete_if{ |k,v| v['type'] == scope_type }
+            end
           end
-          if mode == 'overwrite' && !scope_type.nil?
-            # remove any items of scope_type
-            db = Fabulator::Exhibit::Actions::Lib.get_database(nom)
-            db[:items].delete_if{ |k,v| v['type'] == scope_type }
+          if db.nil?
+            db = { :items => {}, :types => {}, :properties => {} }
           end
+          Fabulator::Exhibit::Actions::Lib.set_database(nom, db)
+ 
           ret = [ ]
           begin
             ret = @actions.run(context)
