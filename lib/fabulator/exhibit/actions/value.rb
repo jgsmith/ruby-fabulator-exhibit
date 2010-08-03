@@ -1,18 +1,20 @@
 module Fabulator
   module Exhibit
     module Actions
-      class Value
-        def compile_xml(xml, c_attrs = { })
-          @name = ActionLib.get_local_attr(xml, EXHIBIT_NS, 'name')
-          @select = ActionLib.get_local_attr(xml, FAB_NS, 'select', { :eval => true })
-          self
-        end
+      class Value < Fabulator::Action
+
+        namespace Fabulator::EXHIBIT_NS
+        attribute :name, :static => false
+
+        has_select
 
         def run(context, autovivify = false)
-          Fabulator::Exhibit::Actions::Lib.add_item_to_accumulator(
-            @name.run(context).first.to_s, 
-            @select.run(context).collect{ |s| s.value }
-          )
+          @context.with(context) do |ctx|
+            Fabulator::Exhibit::Actions::Lib.add_item_to_accumulator(
+              @name.run(ctx).first.to_s, 
+              @select.run(ctx).collect{ |s| s.value }
+            )
+          end
         end
       end
     end

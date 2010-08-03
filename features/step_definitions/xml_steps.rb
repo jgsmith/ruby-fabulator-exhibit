@@ -1,13 +1,20 @@
 Given /the statemachine/ do |doc_xml|
   doc = LibXML::XML::Document.string doc_xml
 
-  @roots = { }
-  @namespaces = { }
-  @data = Fabulator::Expr::Node.new('data', @roots, nil, [])
-  @roots['data'] = @data
+  @roots ||= { }
+  @namespaces ||= { }
+  @data ||= Fabulator::Expr::Node.new('data', @roots, nil, [])
+  @roots['data'] ||= @data
+  @context ||= Fabulator::Expr::Context.new
+  @context.root = @data
+
   @parser ||= Fabulator::Expr::Parser.new
-  @sm = Fabulator::Core::StateMachine.new.compile_xml(doc)
-  @sm.init_context(@data)
+  if @sm.nil?
+    @sm = Fabulator::Core::StateMachine.new.compile_xml(doc, @context)
+  else
+    @sm.compile_xml(doc, @context)
+  end
+  @sm.init_context(@context)
 end
 
 When /I run it with the following params:/ do |param_table|
@@ -16,6 +23,7 @@ When /I run it with the following params:/ do |param_table|
     params[hash['key']] = hash['value']
   end
   @sm.run(params)
+  #puts YAML::dump(@sm)
 end
 
 Then /it should be in the '(.*)' state/ do |s|

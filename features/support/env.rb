@@ -6,6 +6,7 @@ $: << File.expand_path(File.dirname(__FILE__))+'/../../../fabulator/lib'
 require 'fabulator'
 require 'fabulator/exhibit'
 require 'spec/expectations'
+require 'xml/libxml'
 
 Fabulator::Exhibit::Actions::Lib.class_eval do
   def self.fetch_database(nom)
