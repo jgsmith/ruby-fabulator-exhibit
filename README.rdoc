@@ -35,7 +35,7 @@ This Fabulator extension provides to an Exhibit-style database, but does
 not provide actual storage.  The embedding framework will need to define
 several functions:
 
-=== Fabulator::Exhibit::Action::Lib.fetch_database(name)
+=== Fabulator::Exhibit::Actions::Lib.fetch_database(name)
 
 This function should return the Exhibit database.  It needs to look like
 the following data structure:
@@ -46,7 +46,7 @@ the following data structure:
      :items => { }
   }
 
-=== Fabulator::Exhibit::Action::Lib.store_database(name, data) 
+=== Fabulator::Exhibit::Actions::Lib.store_database(name, data) 
 
 This function should store the data for later retrieval.  The data is provided
 in the same format it is returned by the fetch_database function.
