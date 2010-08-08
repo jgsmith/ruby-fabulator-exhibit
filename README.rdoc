@@ -29,6 +29,8 @@ on Exhibit
 
 == REQUIREMENTS:
 
+The uuid gem is required to autogenerate ids.
+
 This Fabulator extension provides to an Exhibit-style database, but does
 not provide actual storage.  The embedding framework will need to define
 several functions:
