@@ -5,7 +5,7 @@ begin
     gem.summary = %Q{Fabulator Extension providing Exhibit-style NoSQL databases.}
     gem.description = %Q{Provides language extensions to manage Exhibit-style NoSQL databases.}
     gem.email = "jgsmith@tamu.edu"
-    gem.homepage = "http://github.com/jgsmith/fabulator-exhibit"
+    gem.homepage = "http://github.com/jgsmith/ruby-fabulator-exhibit"
     gem.authors = ["James Smith"]
     gem.add_dependency('fabulator', '>= 0.0.1')
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
