@@ -8,31 +8,35 @@ Fabulator engine extension for creating Exhibit data sources.
 
 Namespace: http://dh.tamu.edu/ns/fabulator/exhibit/1.0#
 
+See http://www.simile-widgets.org/exhibit/ for more information
+on Exhibit 
+
 == FEATURES/PROBLEMS:
 
 == SYNOPSIS:
 
 === In Ruby
 
- require 'fabulator'
  require 'fabulator/exhibit'
 
 === In Fabulator applications
 
- <ex:database ex:name="data">
-   <ex:item ex:id="id" ex:label="label" ex:type="Type">
+ <ex:database ex:database="data">
+   <ex:item ex:id="'id'" ex:label="'label'" ex:type="ItemType">
      <ex:value ex:name="key" f:select="'value'" />
    </ex:item>
  </ex:database>
 
 == REQUIREMENTS:
 
-No prerequesites are required if running under Rails.  A JSON library needs
-to be loaded if not running under Rails.
+This Fabulator extension provides to an Exhibit-style database, but does
+not provide actual storage.  The embedding framework will need to define
+several functions.  See lib/fabulator/exhibit/actions.rb for the required
+functions.
 
 == INSTALL:
 
-* sudo gem install
+* sudo gem install fabulator-exhibit
 
 == LICENSE:
 
