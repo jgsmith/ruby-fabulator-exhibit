@@ -1,7 +1,9 @@
 Feature: Simple database items
 
   Scenario: simple database with one item
-    Given the statemachine
+    Given a context
+     And the prefix f as "http://dh.tamu.edu/ns/fabulator/1.0#"
+     And the statemachine
       """
         <f:application xmlns:f="http://dh.tamu.edu/ns/fabulator/1.0#" 
            xmlns:ex="http://dh.tamu.edu/ns/fabulator/exhibit/1.0#"
@@ -15,6 +17,7 @@ Feature: Simple database items
           <ex:database>
             <f:value f:path="/f" f:select="ex:item('foo')" />
           </ex:database>
+          <f:value f:path="/g" f:select="ex:items()" />
         </f:application>
       """
      And using the 'test' database
@@ -23,3 +26,4 @@ Feature: Simple database items
      And the item 'foo' should have the label 'fooLabel'
      And the item 'foo' should have the property 'bar' as 'baz'
      And the expression (/f/bar) should equal ['baz']
+     And the expression (/g/foo/bar) should equal ['baz']

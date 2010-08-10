@@ -96,6 +96,9 @@ Then /the (expression \(.*\)) should equal (\[.*\])/ do |x, y|
   b = y.run(@context)
   #puts YAML::dump(a)
   #puts YAML::dump(b)
+  #puts @parser.parse('f:dump(/)', @context).run(@context).first.to_s
+
+  
   a.first.value.should == b.first.value
 end
 

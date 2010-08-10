@@ -9,6 +9,7 @@ module Fabulator
         attribute :id, :eval => true, :static => false
         attribute :type, :static => false, :inherited => true
         attribute :label, :eval => true, :static => false
+        attribute :mode, :static => true, :default => 'add'
 
         has_select
         has_actions
@@ -18,19 +19,23 @@ module Fabulator
             items = @select.run(ctx)
 
             db = @database.run(ctx).first.to_s
-  
+
             items.each do |item|
               info = Fabulator::Exhibit::Actions::Lib.accumulate_item_info do
                 @actions.run(ctx.with_root(item))
               end
               info['id'] = (@id.run(ctx.with_root(item)).first.to_s rescue nil)
-              if info['id'].nil?
-                @@uuid ||= UUID.new
-                info['id'] = @@uuid.generate(:compact)
+              if @mode == 'add'
+                if info['id'].nil?
+                  @@uuid ||= UUID.new
+                  info['id'] = @@uuid.generate(:compact)
+                end
+                info['type'] = @type.run(ctx.with_root(item)).first.to_s
+                info['label'] = @label.run(ctx.with_root(item)).first.to_s
+                Fabulator::Exhibit::Actions::Lib.add_info(db, :items, info)
+              elsif @mode == 'remove' && !info['id'].nil?
+                Fabulator::Exhibit::Actions::Lib.remove_info(db, :items, info['id'])
               end
-              info['type'] = @type.run(ctx.with_root(item)).first.to_s
-              info['label'] = @label.run(ctx.with_root(item)).first.to_s
-              Fabulator::Exhibit::Actions::Lib.add_info(db, :items, info)
             end
           end
         end

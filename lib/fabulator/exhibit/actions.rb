@@ -90,7 +90,7 @@ require 'fabulator/exhibit/actions/value'
           args.collect{ |a|
             id = a.to_s
             i = db[:items][id]
-            r = ctx.root.anon_node(id)
+            r = ctx.root.anon_node(nil)
             r.name = id
             i.each_pair do |k,v|
               next if k == "id"
@@ -103,11 +103,13 @@ require 'fabulator/exhibit/actions/value'
           }
         end
 
+        ## need to make this an iterator
         function 'items' do |ctx, args|
-          db = Fabulator::Exhibit::Actions::Lib.get_database(args.first.to_s)
-          db[:items].collect{ |item|
-            i = ctx.anon_node(item["id"])
-            i.name = item["id"]
+          nom = ctx.attribute(EXHIBIT_NS, 'database', { :inherited => true, :static => true })
+          db = Fabulator::Exhibit::Actions::Lib.get_database(nom)
+          ret = ctx.root.anon_node(nil)
+          db[:items].each_pair{ |id, item|
+            i = ret.create_child(id, nil)
             item.each_pair do |k,v|
               next if k == "id"
               v = [ v ] unless v.is_a?(Array)
@@ -115,8 +117,8 @@ require 'fabulator/exhibit/actions/value'
                 i.create_child(k,vv)
               end
             end
-            i
           }
+          [ ret ]
         end
       end
     end

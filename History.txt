@@ -2,3 +2,13 @@
 
 * 1 major enhancement:
   * Initial release
+
+=== 0.0.2
+
+* 1 major enhancement:
+  * <ex:item/> now takes @ex:mode with values 'add' or 'remove' in order
+    to add or remove items from a database.  The default is 'add'.  Only
+    an @ex:id is required if 'remove'ing.
+
+* 1 minor enhancement:
+  * Document dependence on uuid gem in gem spec
