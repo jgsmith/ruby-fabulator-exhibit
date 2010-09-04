@@ -10,7 +10,8 @@ Given /the statemachine/ do |doc_xml|
 
   @parser ||= Fabulator::Expr::Parser.new
   if @sm.nil?
-    @sm = Fabulator::Core::StateMachine.new.compile_xml(doc, @context)
+    @sm = Fabulator::Core::StateMachine.new
+    @sm.compile_xml(doc, @context)
   else
     @sm.compile_xml(doc, @context)
   end

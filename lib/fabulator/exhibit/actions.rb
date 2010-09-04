@@ -1,16 +1,14 @@
-
 module Fabulator
   EXHIBIT_NS = "http://dh.tamu.edu/ns/fabulator/exhibit/1.0#"
 
-require 'fabulator/exhibit/actions/item'
-require 'fabulator/exhibit/actions/property'
-require 'fabulator/exhibit/actions/type'
-require 'fabulator/exhibit/actions/value'
+  require 'fabulator/exhibit/actions/item'
+  require 'fabulator/exhibit/actions/property'
+  require 'fabulator/exhibit/actions/type'
+  require 'fabulator/exhibit/actions/value'
 
   module Exhibit
     module Actions
-      class Lib
-        include Fabulator::ActionLib
+      class Lib < Fabulator::ActionLib
 
         @@databases = { }
 

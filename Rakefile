@@ -7,7 +7,7 @@ begin
     gem.email = "jgsmith@tamu.edu"
     gem.homepage = "http://github.com/jgsmith/ruby-fabulator-exhibit"
     gem.authors = ["James Smith"]
-    gem.add_dependency('fabulator', '>= 0.0.1')
+    gem.add_dependency('fabulator', '>= 0.0.7')
     gem.add_dependency('uuid', '>= 2.1.0')
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
