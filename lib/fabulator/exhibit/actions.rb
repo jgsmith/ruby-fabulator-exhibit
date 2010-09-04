@@ -8,7 +8,7 @@ module Fabulator
 
   module Exhibit
     module Actions
-      class Lib < Fabulator::ActionLib
+      class Lib < Fabulator::TagLib
 
         @@databases = { }
 
