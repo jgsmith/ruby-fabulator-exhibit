@@ -10,10 +10,10 @@ module Fabulator
         def run(context, autovivify = false)
           @context.with(context) do |ctx|
             Fabulator::Exhibit::Actions::Lib.add_info(
-              @database.run(ctx).first.to_s, 
+              self.database(ctx).first.to_s, 
               :properties, {
-                'id' => @name.run(ctx).first.to_s,
-                'valueType' => @valueType.run(ctx).first.to_s
+                'id' => self.name(ctx).first.to_s,
+                'valueType' => self.valueType(ctx).first.to_s
               }
             )
           end

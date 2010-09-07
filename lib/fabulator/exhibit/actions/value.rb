@@ -11,7 +11,7 @@ module Fabulator
         def run(context, autovivify = false)
           @context.with(context) do |ctx|
             Fabulator::Exhibit::Actions::Lib.add_item_to_accumulator(
-              @name.run(ctx).first.to_s, 
+              self.name(ctx).first.to_s,
               self.select(ctx).collect{ |s| s.value }
             )
           end

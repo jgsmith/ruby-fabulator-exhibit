@@ -25,15 +25,15 @@ module Fabulator
                 self.run_actions(ctx.with_root(item))
               end
               info['id'] = (@id.run(ctx.with_root(item)).first.to_s rescue nil)
-              if @mode == 'add'
+              if self.mode == 'add'
                 if info['id'].nil?
                   @@uuid ||= UUID.new
                   info['id'] = @@uuid.generate(:compact)
                 end
-                info['type'] = @type.run(ctx.with_root(item)).first.to_s
-                info['label'] = @label.run(ctx.with_root(item)).first.to_s
+                info['type'] = self.type(ctx.with_root(item)).first.to_s
+                info['label'] = self.label(ctx.with_root(item)).first.to_s
                 Fabulator::Exhibit::Actions::Lib.add_info(db, :items, info)
-              elsif @mode == 'remove' && !info['id'].nil?
+              elsif self.mode == 'remove' && !info['id'].nil?
                 Fabulator::Exhibit::Actions::Lib.remove_info(db, :items, info['id'])
               end
             end
@@ -52,15 +52,15 @@ module Fabulator
         def run(context, autovivify = false)
           ret = [ ]
           @context.with(context) do |ctx|
-            nom = @database.run(ctx).first.to_s
-            mode = @mode.run(ctx).first.to_s
-            scope_type = (@scope_type.run(ctx).first.to_s rescue nil)
+            nom = self.database(ctx).first.to_s
+            m = self.mode(ctx).first.to_s
+            scopeType = (self.scope_type(ctx).first.to_s rescue nil)
             db = nil
-            if mode == 'merge' || !scope_type.nil?
+            if m == 'merge' || !scopeType.nil?
             db = Fabulator::Exhibit::Actions::Lib.fetch_database(nom)
-              if !db.nil? && mode == 'overwrite'  # !scope_type.nil? is a consequence
+              if !db.nil? && m == 'overwrite'  # !scope_type.nil? is a consequence
                 # remove any items of scope_type
-                db[:items].delete_if{ |k,v| v['type'] == scope_type }
+                db[:items].delete_if{ |k,v| v['type'] == scopeType }
               end
             end
             if db.nil?
