@@ -12,7 +12,7 @@ module Fabulator
 
         @@databases = { }
 
-        register_namespace EXHIBIT_NS
+        namespace EXHIBIT_NS
 
         action 'database', Database
         action 'item', Item

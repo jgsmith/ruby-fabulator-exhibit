@@ -12,7 +12,7 @@ module Fabulator
           @context.with(context) do |ctx|
             Fabulator::Exhibit::Actions::Lib.add_item_to_accumulator(
               @name.run(ctx).first.to_s, 
-              @select.run(ctx).collect{ |s| s.value }
+              self.select(ctx).collect{ |s| s.value }
             )
           end
         end

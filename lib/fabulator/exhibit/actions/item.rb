@@ -16,13 +16,13 @@ module Fabulator
 
         def run(context, autovivify = false)
           @context.with(context) do |ctx|
-            items = @select.run(ctx)
+            items = self.select(ctx)
 
             db = @database.run(ctx).first.to_s
 
             items.each do |item|
               info = Fabulator::Exhibit::Actions::Lib.accumulate_item_info do
-                @actions.run(ctx.with_root(item))
+                self.run_actions(ctx.with_root(item))
               end
               info['id'] = (@id.run(ctx.with_root(item)).first.to_s rescue nil)
               if @mode == 'add'
@@ -69,7 +69,7 @@ module Fabulator
             Fabulator::Exhibit::Actions::Lib.set_database(nom, db)
  
             begin
-              ret = @actions.run(ctx)
+              ret = self.run_actions(ctx)
             ensure
               Fabulator::Exhibit::Actions::Lib.store_database(
                 nom,
