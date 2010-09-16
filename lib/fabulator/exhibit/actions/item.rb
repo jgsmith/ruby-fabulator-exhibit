@@ -21,9 +21,10 @@ module Fabulator
             db = @database.run(ctx).first.to_s
 
             items.each do |item|
-              info = Fabulator::Exhibit::Actions::Lib.accumulate_item_info do
-                self.run_actions(ctx.with_root(item))
-              end
+              ctx.set_scoped_info('exhibit/item/info', { })
+              self.run_actions(ctx.with_root(item))
+              info = ctx.get_scoped_info('exhibit/item/info')
+
               info['id'] = (@id.run(ctx.with_root(item)).first.to_s rescue nil)
               if self.mode == 'add'
                 if info['id'].nil?
