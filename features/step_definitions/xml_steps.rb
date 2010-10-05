@@ -7,11 +7,11 @@ Given /the statemachine/ do |doc_xml|
   @roots['data'] ||= @data
   @context ||= Fabulator::Expr::Context.new
   @context.root = @data
+  @compiler ||= Fabulator::Compiler.new
 
   @parser ||= Fabulator::Expr::Parser.new
   if @sm.nil?
-    @sm = Fabulator::Core::StateMachine.new
-    @sm.compile_xml(doc, @context)
+    @sm = @compiler.compile(doc)
   else
     @sm.compile_xml(doc, @context)
   end

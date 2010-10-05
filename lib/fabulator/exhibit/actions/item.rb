@@ -33,9 +33,9 @@ module Fabulator
                 end
                 info['type'] = self.type(ctx.with_root(item)).first.to_s
                 info['label'] = self.label(ctx.with_root(item)).first.to_s
-                Fabulator::Exhibit::Actions::Lib.add_info(db, :items, info)
+                Fabulator::Exhibit::Lib.add_info(db, :items, info)
               elsif self.mode == 'remove' && !info['id'].nil?
-                Fabulator::Exhibit::Actions::Lib.remove_info(db, :items, info['id'])
+                Fabulator::Exhibit::Lib.remove_info(db, :items, info['id'])
               end
             end
           end
@@ -58,7 +58,7 @@ module Fabulator
             scopeType = (self.scope_type(ctx).first.to_s rescue nil)
             db = nil
             if m == 'merge' || !scopeType.nil?
-            db = Fabulator::Exhibit::Actions::Lib.fetch_database(nom)
+            db = Fabulator::Exhibit::Lib.fetch_database(nom)
               if !db.nil? && m == 'overwrite'  # !scope_type.nil? is a consequence
                 # remove any items of scope_type
                 db[:items].delete_if{ |k,v| v['type'] == scopeType }
@@ -67,14 +67,14 @@ module Fabulator
             if db.nil?
               db = { :items => {}, :types => {}, :properties => {} }
             end
-            Fabulator::Exhibit::Actions::Lib.set_database(nom, db)
+            Fabulator::Exhibit::Lib.set_database(nom, db)
  
             begin
               ret = self.run_actions(ctx)
             ensure
-              Fabulator::Exhibit::Actions::Lib.store_database(
+              Fabulator::Exhibit::Lib.store_database(
                 nom,
-                Fabulator::Exhibit::Actions::Lib.get_database(nom)
+                Fabulator::Exhibit::Lib.get_database(nom)
               )
             end
           end

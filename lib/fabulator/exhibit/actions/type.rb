@@ -15,7 +15,7 @@ module Fabulator
             if !pl.nil?
               info['pluralLabel'] = pl
             end
-            Fabulator::Exhibit::Actions::Lib.add_info(
+            Fabulator::Exhibit::Lib.add_info(
               self.database(ctx).first.to_s, :types, info
             )
           end

@@ -4,11 +4,12 @@ $: << File.expand_path(File.dirname(__FILE__))+'/../../lib'
 $: << File.expand_path(File.dirname(__FILE__))+'/../../../fabulator/lib'
 
 require 'fabulator'
+require 'fabulator/template'
 require 'fabulator/exhibit'
 require 'spec/expectations'
 require 'xml/libxml'
 
-Fabulator::Exhibit::Actions::Lib.class_eval do
+Fabulator::Exhibit::Lib.class_eval do
   def self.fetch_database(nom)
     @@dbs ||= { }
     @@dbs[nom] ||= { :types => {}, :items => {}, :properties => {} }

@@ -1,2 +1,2 @@
-require 'fabulator/exhibit/actions'
+require 'fabulator/exhibit/lib'
 require 'fabulator/exhibit/version'

@@ -9,7 +9,7 @@ module Fabulator
         
         def run(context, autovivify = false)
           @context.with(context) do |ctx|
-            Fabulator::Exhibit::Actions::Lib.add_info(
+            Fabulator::Exhibit::Lib.add_info(
               self.database(ctx).first.to_s, 
               :properties, {
                 'id' => self.name(ctx).first.to_s,
