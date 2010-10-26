@@ -1,8 +1,9 @@
-=== 0.0.4
+=== 0.0.4 2010-10-26
 
-* 1 major enhancement:
+* 3 major enhancement:
   * Works with Fabulator 0.0.9 and later
   * Moved Fabulator::Exhibit::Actions::Lib to Fabulator::Exhibit::Lib
+  * Provides markup for exhibits in Fabulator views
 
 === 0.0.3 2010-09-07
 
