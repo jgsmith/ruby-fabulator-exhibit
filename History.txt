@@ -1,3 +1,11 @@
+=== 0.0.5 2010-10-28
+
+* 1 major enhancement:
+  * Added ex:if-exists conditional for lenses (xslt)
+
+* 1 minor enhancement:
+  * Added ex:show-missing attribute for ex:list-view
+
 === 0.0.4 2010-10-26
 
 * 3 major enhancement:
