@@ -133,6 +133,7 @@
       <xsl:attribute name="ex:role">facet</xsl:attribute>
       <xsl:attribute name="id"><xsl:value-of select="generate-id(.)" /></xsl:attribute>
       <xsl:attribute name="ex:expression"><xsl:value-of select="@ex:select" /></xsl:attribute>
+      <xsl:attribute name="ex:showMissing"><xsl:value-of select="@ex:show-missing" /></xsl:attribute>
       <xsl:attribute name="ex:facetClass">List</xsl:attribute>
       <xsl:attribute name="ex:facetLabel"><xsl:value-of select="ex:caption" /></xsl:attribute>
     </div>
@@ -186,10 +187,8 @@
     <xsl:if test="ex:caption">
       <span class="exhibit-lens-property-name"><xsl:value-of select="ex:caption" /></span>
     </xsl:if>
-    <span class="exhibit-lens-property-values">
-      <span>
-        <xsl:attribute xsl:name="ex:content"><xsl:value-of select="@ex:select" /></xsl:attribute>
-      </span>
+    <span class="exhibit-lens-property-value">
+      <xsl:attribute xsl:name="ex:content"><xsl:value-of select="@ex:select" /></xsl:attribute>
     </span>
   </xsl:template>
 
@@ -216,6 +215,13 @@
       <xsl:attribute name="ex:repeated"><xsl:value-of select="@ex:select" /></xsl:attribute>
       <xsl:apply-templates />
     </div>
+  </xsl:template>
+
+  <xsl:template match="ex:if-exists">
+    <span>
+      <xsl:attribute name="ex:if-exists"><xsl:value-of select="@ex:select" /></xsl:attribute>
+      <xsl:apply-templates />
+    </span>
   </xsl:template>
   
 </xsl:stylesheet>
