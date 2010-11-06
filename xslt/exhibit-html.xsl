@@ -157,6 +157,15 @@
   <xsl:template match="ex:value">
     <span>
       <xsl:attribute name="ex:content"><xsl:value-of select="@ex:select" /></xsl:attribute>
+      <xsl:if test="@ex:separator">
+      <xsl:attribute name="ex:separator"><xsl:value-of select="@ex:separator" /></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@ex:last-separator">
+      <xsl:attribute name="ex:last-separator"><xsl:value-of select="@ex:last-separator" /></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@ex:pair-separator">
+      <xsl:attribute name="ex:pair-separator"><xsl:value-of select="@ex:pair-separator" /></xsl:attribute>
+      </xsl:if>
     </span>
   </xsl:template>
 
@@ -179,6 +188,15 @@
       <td class="exhibit-lens-property-name"><xsl:value-of select="ex:caption" /><xsl:text>: </xsl:text></td>
       <td class="exhibit-lens-property-values"><span>
         <xsl:attribute xsl:name="ex:content"><xsl:value-of select="@ex:select" /></xsl:attribute>
+        <xsl:if test="@ex:separator">
+        <xsl:attribute name="ex:separator"><xsl:value-of select="@ex:separator" /></xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@ex:last-separator">
+        <xsl:attribute name="ex:last-separator"><xsl:value-of select="@ex:last-separator" /></xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@ex:pair-separator">
+        <xsl:attribute name="ex:pair-separator"><xsl:value-of select="@ex:pair-separator" /></xsl:attribute>
+        </xsl:if>
       </span></td>
     </tr>
   </xsl:template>
@@ -189,6 +207,16 @@
     </xsl:if>
     <span class="exhibit-lens-property-value">
       <xsl:attribute xsl:name="ex:content"><xsl:value-of select="@ex:select" /></xsl:attribute>
+      <xsl:attribute xsl:name="ex:content"><xsl:value-of select="@ex:select" /></xsl:attribute>
+      <xsl:if test="@ex:separator">
+      <xsl:attribute name="ex:separator"><xsl:value-of select="@ex:separator" /></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@ex:last-separator">
+      <xsl:attribute name="ex:last-separator"><xsl:value-of select="@ex:last-separator" /></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@ex:pair-separator">
+      <xsl:attribute name="ex:pair-separator"><xsl:value-of select="@ex:pair-separator" /></xsl:attribute>
+      </xsl:if>
     </span>
   </xsl:template>
 
