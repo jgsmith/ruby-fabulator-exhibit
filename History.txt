@@ -1,3 +1,7 @@
+=== 0.0.7 2010-11-08
+* 1 bug fix
+  * refer to 'id' instead of :id for adding information to a database
+
 === 0.0.6 2010-11-06
 * 1 minor enhancement:
   * Added ex:separator, ex:last-separator, ex:pair-separator to <ex:value />

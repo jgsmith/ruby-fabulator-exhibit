@@ -10,7 +10,7 @@ module Fabulator
 
         def run(context, autovivify = false)
           @context.with(context) do |ctx|
-            info = { :id => self.name(ctx).first.to_s }
+            info = { 'id' => self.name(ctx).first.to_s }
             pl = (self.pluralLabel(ctx).first.to_s rescue nil)
             if !pl.nil?
               info['pluralLabel'] = pl

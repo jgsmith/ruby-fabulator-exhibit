@@ -1,3 +1,4 @@
+@db
 Feature: Simple database items
 
   Scenario: simple database with one item
@@ -28,6 +29,7 @@ Feature: Simple database items
      And the item 'foo' should have type 'fooType'
      And the item 'foo' should have the label 'fooLabel'
      And the item 'foo' should have the property 'bar' as 'baz'
+     And the item 'bar' should have the label 'barLabel'
      And the expression (/f/bar) should equal ['baz']
      And the expression (/g/foo/bar) should equal ['baz']
      And the expression (/g/bar/bar) should equal ['bat']
