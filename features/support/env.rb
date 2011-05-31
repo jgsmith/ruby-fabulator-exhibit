@@ -1,13 +1,12 @@
 # This file makes it possible to install RubyCAS-Client as a Rails plugin.
 
 $: << File.expand_path(File.dirname(__FILE__))+'/../../lib'
-$: << File.expand_path(File.dirname(__FILE__))+'/../../../fabulator/lib'
+$: << File.expand_path(File.dirname(__FILE__))+'/../../../ruby-fabulator/lib'
 
 require 'fabulator'
 require 'fabulator/template'
 require 'fabulator/exhibit'
 require 'spec/expectations'
-require 'xml/libxml'
 
 Fabulator::Exhibit::Lib.class_eval do
   def self.fetch_database(nom)

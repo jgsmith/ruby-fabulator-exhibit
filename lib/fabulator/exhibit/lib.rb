@@ -36,6 +36,7 @@ module Fabulator
       end
 
       def self.get_database(nom)
+        @@databases ||= {}
         @@databases[nom] ||= self.fetch_database(nom)
       end
 
@@ -50,8 +51,7 @@ module Fabulator
       end
 
       def self.add_info(nom, t, item)
-        @@databases ||= {}
-        @@databases[nom] ||= self.fetch_database(nom)
+        self.get_database(nom)
         @@databases[nom][t][item['id']] ||= { }
         @@databases[nom][t][item['id']].merge!(item)
         @@databases[nom][t][item['id']].each_pair do |k,v|
@@ -67,9 +67,36 @@ module Fabulator
       end
 
       def self.remove_info(nom, t, id)
-        @@databases[nom] ||= self.fetch_database(nom)
+        self.get_database(nom)
         return if @@databases[nom][t].empty?
         @@databases[nom][t].delete(id)
+      end
+      
+      def self.get_item(nom, ctx, id)
+        self.get_database(nom)
+        return {} if @@databases[nom][:items].empty?
+        i = @@databases[nom][:items][id]
+        ## now go through computed properties with i
+        ctx_item = ctx.root.anon_node(nil)
+        ctx_item.name = id
+        i.each_pair do |k,v|
+          next if k == "id"
+          v = [ v ] unless v.is_a?(Array)
+          v.each do |vv|
+            ctx_item.create_child(k,vv)
+          end
+        end
+        @@databases[nom][:properties].each_pair{ |prop, info|
+          if info['select']
+            # eval select and put the results in for prop
+            c = ctx.with_root(ctx_item)
+            c.eval_expression(info['select']).each do |v|
+              next if v.nil? || v.value.nil?
+              ctx_item.create_child(prop, v.value)
+            end
+          end
+        }
+        ctx_item
       end
 
       function 'item' do |ctx, args|
@@ -78,17 +105,7 @@ module Fabulator
         db = Fabulator::Exhibit::Lib.get_database(nom)
         args.collect{ |a|
           id = a.to_s
-          i = db[:items][id]
-          r = ctx.root.anon_node(nil)
-          r.name = id
-          i.each_pair do |k,v|
-            next if k == "id"
-            v = [ v ] unless v.is_a?(Array)
-            v.each do |vv|
-              r.create_child(k,vv)
-            end
-          end
-          r
+          Fabulator::Exhibit::Lib.get_item(nom, ctx, id)
         }
       end
 

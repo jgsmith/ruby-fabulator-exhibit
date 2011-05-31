@@ -68,5 +68,15 @@ Then /^the rendered html should equal$/ do |doc|
 
   r = r.gsub(/xmlns(:\S+)?=['"][^'"]*['"]/, '').gsub(/\s+/, ' ').gsub(/\s+>/, '>').gsub(/>\s*</, ">\n<").gsub(/id=["']id\d+(-.*?)?["']/, 'id="id\1"')
   doc = doc.gsub(/xmlns(:\S+)?=['"][^'"]*['"]/, '').gsub(/\s+/, ' ').gsub(/\s+>/, '>').gsub(/>\s*</, ">\n<").gsub(/id=["']id\d+(-.*?)?["']/, 'id="id\1"')
+  puts r
+  puts "--------------------------------"
+  puts doc
   r.should == doc
+  
+  #r = r.gsub(/xmlns(:\S+)?=['"][^'"]*['"]/, '').gsub(/\s+/, ' ').gsub(/\s+>/, '>').gsub(/>\s*</, ">\n<")
+  #doc = doc.gsub(/xmlns(:\S+)?=['"][^'"]*['"]/, '').gsub(/\s+/, ' ').gsub(/\s+>/, '>').gsub(/>\s*</, ">\n<")
+
+
+  #r.should == doc
+  
 end

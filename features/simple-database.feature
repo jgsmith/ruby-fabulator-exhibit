@@ -11,6 +11,8 @@ Feature: Simple database items
            ex:database="test"
         >
           <ex:database>
+            <ex:property ex:name="foobar" f:select="f:concat(bar, bar)" />
+            <ex:property ex:name="editurl" f:select="f:concat('http://example.com/edit/', f:name(.), '/edit')" />
             <ex:item ex:id="'foo'" ex:type="fooType" ex:label="'fooLabel'">
               <ex:value ex:name="bar" f:select="'baz'" />
             </ex:item>
@@ -29,7 +31,10 @@ Feature: Simple database items
      And the item 'foo' should have type 'fooType'
      And the item 'foo' should have the label 'fooLabel'
      And the item 'foo' should have the property 'bar' as 'baz'
+     And the item 'foo' should have the property 'foobar' as 'bazbaz'
+     And the item 'foo' should have the property 'editurl' as 'http://example.com/edit/foo/edit'
      And the item 'bar' should have the label 'barLabel'
+     And the item 'bar' should have the property 'editurl' as 'http://example.com/edit/bar/edit'
      And the expression (/f/bar) should equal ['baz']
      And the expression (/g/foo/bar) should equal ['baz']
      And the expression (/g/bar/bar) should equal ['bat']
