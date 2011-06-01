@@ -90,6 +90,11 @@ module Fabulator
           if info['select']
             # eval select and put the results in for prop
             c = ctx.with_root(ctx_item)
+            if info['namespaces']
+              info['namespaces'].each_pair do |p,n|
+                c.set_ns(p,n)
+              end
+            end
             c.eval_expression(info['select']).each do |v|
               next if v.nil? || v.value.nil?
               ctx_item.create_child(prop, v.value)

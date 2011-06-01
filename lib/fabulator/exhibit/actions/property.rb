@@ -16,6 +16,11 @@ module Fabulator
             }
             if !@select.nil?
               props['select'] = @select
+              ns = { }
+              ctx.each_namespace do |p,n|
+                ns[p] = n
+              end
+              props['namespaces'] = ns
             end
             Fabulator::Exhibit::Lib.add_info(
               self.database(ctx).first.to_s, 
