@@ -14,7 +14,10 @@ module Fabulator
               'id' => self.name(ctx).first.to_s,
               'valueType' => self.valueType(ctx).first.to_s
             }
-            if !@select.nil?
+            if @select.nil?
+              props['select'] = nil
+              props['namespaces'] = {}
+            else
               props['select'] = @select
               ns = { }
               ctx.each_namespace do |p,n|
